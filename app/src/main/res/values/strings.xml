@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TypicCode</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">홈</string>
+    <string name="title_search">검색</string>
+    <string name="title_interest">관심매장</string>
+    <string name="title_user">마이</string>
 </resources>

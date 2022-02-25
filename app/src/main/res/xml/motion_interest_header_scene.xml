@@ -1,0 +1,54 @@
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 1 -->
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:duration="300">
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@id/recyclerView"
+            app:touchAnchorSide="top" />
+
+    </Transition>
+
+    <!-- 2 -->
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="60dp" />
+        <Constraint
+            android:id="@+id/v_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+    </ConstraintSet>
+
+    <!-- 3 -->
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="30dp" />
+        <Constraint
+            android:id="@+id/v_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="1"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+    </ConstraintSet>
+</MotionScene>
