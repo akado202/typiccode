@@ -8,4 +8,7 @@
 
     <string name="tab_save">저장</string>
     <string name="tab_recent">최근</string>
+
+    <string name="no_waiting">대기없음</string>
+    <string name="remote_waiting">원격줄서기</string>
 </resources>

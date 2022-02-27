@@ -1,45 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+    <data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
+        <import type="android.view.View" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        <variable
+            name="viewModel"
+            type="com.akado.typiccode.domain.model.RestaurantDomainModel" />
+    </data>
 
-    <ImageView
-        android:id="@+id/iv_thumbnail"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintWidth_percent="0.3"
-        tools:background="@color/black"
-        tools:alpha="0.1"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top" />
-
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@id/iv_thumbnail" />
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_frame"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            app:layout_constraintWidth_percent="0.3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:restaurantThumbnail="@{viewModel.thumbnail}"
+                    tools:alpha="0.1"
+                    tools:background="@color/black" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:alpha="0.5"
+                    android:background="@color/black"
+                    android:visibility="@{viewModel.waitingCount == 0 ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_no_waiting"
+                    app:layout_constraintEnd_toEndOf="@id/tv_no_waiting"
+                    app:layout_constraintStart_toStartOf="@id/tv_no_waiting"
+                    app:layout_constraintTop_toTopOf="@id/tv_no_waiting" />
+
+                <TextView
+                    android:id="@+id/tv_no_waiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/no_waiting"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="@{viewModel.waitingCount == 0 ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_cuisine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{viewModel.classification}"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_restaurant_name"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toEndOf="@id/cv_frame"
+            app:layout_constraintTop_toTopOf="@id/cv_frame"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@string/tools_sentence" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:maxLines="1"
+            android:text="@{viewModel.restaurantName}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/iv_star"
+            app:layout_constraintEnd_toEndOf="@id/tv_cuisine"
+            app:layout_constraintStart_toStartOf="@id/tv_cuisine"
+            app:layout_constraintTop_toBottomOf="@id/tv_cuisine"
+            tools:text="@string/tools_sentence" />
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toTopOf="@id/tv_remote_waiting"
+            app:layout_constraintStart_toStartOf="@id/tv_cuisine"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{String.valueOf(viewModel.rating)}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_star"
+            app:layout_constraintStart_toEndOf="@id/iv_star"
+            app:layout_constraintTop_toTopOf="@id/iv_star"
+            tools:text="@string/tools_word" />
+
+        <TextView
+            android:id="@+id/tv_review_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_star"
+            app:layout_constraintStart_toEndOf="@id/tv_rating"
+            app:layout_constraintTop_toTopOf="@id/iv_star"
+            app:restaurantReviewCount="@{viewModel.reviewCount}"
+            tools:text="@string/tools_word" />
+
+        <TextView
+            android:id="@+id/tv_metro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.summaryAddress}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_star"
+            app:layout_constraintStart_toEndOf="@id/tv_review_count"
+            app:layout_constraintTop_toTopOf="@id/iv_star"
+            tools:text="@string/tools_word" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.2"
+            android:background="@drawable/bg_round_4_teal_200"
+            android:visibility="@{viewModel.isRemoteWaiting? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_remote_waiting"
+            app:layout_constraintEnd_toEndOf="@id/tv_remote_waiting"
+            app:layout_constraintStart_toStartOf="@id/tv_remote_waiting"
+            app:layout_constraintTop_toTopOf="@id/tv_remote_waiting" />
+
+        <TextView
+            android:id="@+id/tv_remote_waiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="@string/remote_waiting"
+            android:textColor="@color/teal_700"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.isRemoteWaiting? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/cv_frame"
+            app:layout_constraintStart_toStartOf="@id/tv_cuisine"
+            app:layout_constraintTop_toBottomOf="@id/iv_star" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@id/cv_frame" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

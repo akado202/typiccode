@@ -1,12 +1,16 @@
 package com.akado.typiccode.ui.interest
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.akado.typiccode.R
+import com.akado.typiccode.databinding.ViewRestaurantRowBinding
 import com.akado.typiccode.domain.model.RestaurantDomainModel
 import com.bumptech.glide.Glide
 
@@ -19,9 +23,9 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.view_restaurant_row, parent, false)
-        return ViewHolder(view)
+        val binding =
+            ViewRestaurantRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -32,17 +36,12 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
         holder.bind(items[position])
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val iv_thumbnail = itemView.findViewById<ImageView>(R.id.iv_thumbnail)
-
+    class ViewHolder(val binding: ViewRestaurantRowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(model: RestaurantDomainModel) {
-            Glide.with(itemView)
-                .load(model.thumbnail)
-                .centerCrop()
-                .into(iv_thumbnail)
+            binding.viewModel = model
         }
     }
-
 }
 
 object RestaurantBindingConverter {
@@ -51,7 +50,7 @@ object RestaurantBindingConverter {
     @JvmStatic
     fun setRestaurantAdapter(
         recyclerView: RecyclerView,
-        set:Boolean
+        set: Boolean
     ) {
         recyclerView.adapter = if (set) RestaurantAdapter() else null
     }
@@ -62,10 +61,26 @@ object RestaurantBindingConverter {
         recyclerView: RecyclerView,
         items: List<RestaurantDomainModel>?
     ) {
-        if (recyclerView.adapter is RestaurantAdapter) {
-            val adapter = recyclerView.adapter as RestaurantAdapter
-            adapter.setItems(items ?: listOf())
-            adapter.notifyDataSetChanged()
+        val adapter = recyclerView.adapter as RestaurantAdapter
+        adapter.let {
+            it.setItems(items ?: listOf())
+            it.notifyDataSetChanged()
         }
+    }
+
+    @BindingAdapter("restaurantThumbnail")
+    @JvmStatic
+    fun setRestaurantThumbnail(imageView: ImageView, url: String) {
+        Glide.with(imageView)
+            .load(url)
+            .centerCrop()
+            .into(imageView)
+    }
+
+    @SuppressLint("SetTextI18n")
+    @BindingAdapter("restaurantReviewCount")
+    @JvmStatic
+    fun setRestaurantReviewCount(textView: TextView, count: Int) {
+        textView.text = if (count > 300) "(300+)" else "($count)"
     }
 }
