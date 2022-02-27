@@ -18,7 +18,9 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     private var items: List<RestaurantDomainModel> = listOf()
 
-    fun setItems(items: List<RestaurantDomainModel>) {
+    fun updateItems(items: List<RestaurantDomainModel>) {
+        // TODO: diffUtil code here
+
         this.items = items
     }
 
@@ -34,6 +36,7 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position])
+        holder.binding.vAction.setOnClickListener{ }
     }
 
     class ViewHolder(val binding: ViewRestaurantRowBinding) :
@@ -63,7 +66,9 @@ object RestaurantBindingConverter {
     ) {
         val adapter = recyclerView.adapter as RestaurantAdapter
         adapter.let {
-            it.setItems(items ?: listOf())
+            it.updateItems(items ?: listOf())
+
+            // TODO: diffUtil 로 code 교체
             it.notifyDataSetChanged()
         }
     }

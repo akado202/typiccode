@@ -28,7 +28,7 @@
         <Constraint
             android:id="@+id/v_elevation"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="4dp"
             android:alpha="0"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
     </ConstraintSet>
@@ -47,8 +47,8 @@
         <Constraint
             android:id="@+id/v_elevation"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:alpha="1"
+            android:layout_height="4dp"
+            android:alpha="0.04"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
     </ConstraintSet>
 </MotionScene>
