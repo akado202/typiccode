@@ -35,6 +35,15 @@ android {
         dataBinding true
         viewBinding true
     }
+
+    kapt {
+        correctErrorTypes true
+
+        javacOptions {
+            option("-Adagger.fastInit=ENABLED")
+            option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+        }
+    }
 }
 
 dependencies {
@@ -55,10 +64,22 @@ dependencies {
 
     implementation 'androidx.activity:activity-ktx:1.4.0'
 
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+//    implementation 'com.github.bumptech.glide:okhttp3-integration:4.8.0'
+//    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit_adapter"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging"
+
 }

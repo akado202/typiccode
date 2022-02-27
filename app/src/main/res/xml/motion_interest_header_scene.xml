@@ -8,7 +8,7 @@
         app:duration="300">
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/recyclerView"
+            app:touchAnchorId="@id/viewPager"
             app:touchAnchorSide="top" />
 
     </Transition>
